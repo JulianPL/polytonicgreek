@@ -5,9 +5,13 @@ This project provides methods for converting betacode into proper polytonic gree
 ## TODO
 
 Add packages for metric and maybe grammar
+
 Add functionality for the main package
+
 Remove the mess of the constants in polytonicchar.String()
+
 Add testcases
+
 Add examples
 
 ## polytonicchar
