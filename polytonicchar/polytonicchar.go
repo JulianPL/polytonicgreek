@@ -17,6 +17,10 @@ func Name(c *PolytonicChar) Char {
 	return c.name
 }
 
+func Diacritics(c *PolytonicChar) (bool, Spiritus, Accent) {
+	return c.iotaSubscriptum, c.spiritus, c.accent
+}
+
 func SetVariant(char *PolytonicChar, in bool) {
 	char.variant = in
 }
