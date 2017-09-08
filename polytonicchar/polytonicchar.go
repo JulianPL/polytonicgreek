@@ -65,7 +65,6 @@ const (
 	Circumflex
 )
 
-
 func New(n Char, c bool) *PolytonicChar {
 	return &PolytonicChar{name: n, capital: c}
 }
@@ -78,20 +77,24 @@ func Diacritics(c *PolytonicChar) (bool, Spiritus, Accent) {
 	return c.iotaSubscriptum, c.spiritus, c.accent
 }
 
-func SetVariant(char *PolytonicChar, in bool) {
+func SetVariant(char *PolytonicChar, in bool) *PolytonicChar {
 	char.variant = in
+	return char
 }
 
-func SetIota(char *PolytonicChar, in bool) {
+func SetIota(char *PolytonicChar, in bool) *PolytonicChar {
 	char.iotaSubscriptum = in
+	return char
 }
 
-func SetSpiritus(char *PolytonicChar, in Spiritus) {
+func SetSpiritus(char *PolytonicChar, in Spiritus) *PolytonicChar {
 	char.spiritus = in
+	return char
 }
 
-func SetAccent(char *PolytonicChar, in Accent) {
+func SetAccent(char *PolytonicChar, in Accent) *PolytonicChar {
 	char.accent = in
+	return char
 }
 
 func AreEqual(char1 *PolytonicChar, char2 *PolytonicChar, exact bool) bool {

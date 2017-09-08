@@ -198,11 +198,9 @@ func TestSetVariant(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		char := New(Alpha, false)
-		SetVariant(char, c.in)
-		got := char.variant
+		got := SetVariant(New(Alpha, false), c.in).variant
 		if got != c.want {
-			t.Errorf("char := New(Alpha, false);SetVariant(char, %v);char.variant == %v, want %v", c.in, got, c.want)
+			t.Errorf("SetVariant(New(Alpha, false), %v).variant == %v, want %v", c.in, got, c.want)
 		}
 	}
 }
@@ -222,11 +220,9 @@ func TestSetIota(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		char := New(Alpha, false)
-		SetIota(char, c.in)
-		got := char.iotaSubscriptum
+		got := SetIota(New(Alpha, false), c.in).iotaSubscriptum
 		if got != c.want {
-			t.Errorf("char := New(Alpha, false);SetIota(char, %v);char.iotaSubscriptum == %v, want %v", c.in, got, c.want)
+			t.Errorf("SetIota(New(Alpha, false), %v).iotaSubscriptum == %v, want %v", c.in, got, c.want)
 		}
 	}
 }
@@ -246,11 +242,9 @@ func TestSetSpiritus(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		char := New(Alpha, false)
-		SetSpiritus(char, c.in)
-		got := char.spiritus
+		got := SetSpiritus(New(Alpha, false), c.in).spiritus
 		if got != c.want {
-			t.Errorf("char := New(Alpha, false);SetSpiritus(char, %v);char.spiritus == %v, want %v", c.in, got, c.want)
+			t.Errorf("SetSpiritus(New(Alpha, false), %v).spiritus == %v, want %v", c.in, got, c.want)
 		}
 	}
 }
@@ -270,11 +264,9 @@ func TestSetAccent(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		char := New(Alpha, false)
-		SetAccent(char, c.in)
-		got := char.accent
+		got := SetAccent(New(Alpha, false), c.in).accent
 		if got != c.want {
-			t.Errorf("char := New(Alpha, false);SetAccent(char, %v);char.accent == %v, want %v", c.in, got, c.want)
+			t.Errorf("SetAccent(New(Alpha, false), %v).accent == %v, want %v", c.in, got, c.want)
 		}
 	}
 }
