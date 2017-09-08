@@ -25,7 +25,7 @@ func InString(char *polytonicchar.PolytonicChar, str PolytonicString, exact bool
 func SubString(sub PolytonicString, str PolytonicString, exact bool) int {
 	for i, _ := range str {
 		if i+len(sub) > len(str) {
-			return -1
+			break
 		}
 		found := true
 		for j, _ := range sub {
@@ -41,7 +41,7 @@ func SubString(sub PolytonicString, str PolytonicString, exact bool) int {
 	return -1
 }
 
-func WrapString(str PolytonicString, width int) {
+func WrapString(str PolytonicString, width int) *PolytonicString{
 	space := polytonicchar.New(polytonicchar.Space, false)
 	newline := polytonicchar.New(polytonicchar.Space, false)
 	polytonicchar.SetVariant(newline, true)
@@ -56,12 +56,13 @@ func WrapString(str PolytonicString, width int) {
 			current = 0
 			lastFound = -1
 		}
-		if current > width {
+		if current > width && lastFound >= 0{
 			polytonicchar.SetVariant((str)[lastFound], true)
 			current = i - lastFound
 			lastFound = -1
 		}
 	}
+    return &str
 }
 
 func BetaToStr(str string) PolytonicString {
@@ -86,7 +87,7 @@ func BetaToStr(str string) PolytonicString {
 				polytonicchar.SetSpiritus((polyStr)[len(polyStr)-1], spiritus)
 			}
 		}
-		if '|' == betaSpiritus[beta] {
+		if '|' == beta {
 			if len(polyStr) > 0 {
 				polytonicchar.SetIota((polyStr)[len(polyStr)-1], true)
 			}
