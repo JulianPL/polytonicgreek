@@ -2,18 +2,6 @@
 
 This project provides methods for converting betacode into proper polytonic greek letters and for basic string operations.
 
-## TODO
-
-Add packages for metric and maybe grammar
-
-Add functionality for the main package
-
-Remove the mess of the constants in polytonicchar.String()
-
-Add testcases
-
-Add examples
-
 ## polytonicchar
 
 This package provides the basic struct for polytonic greek letters:
@@ -24,3 +12,9 @@ This package provides the basic struct for polytonic greek letters:
 ## polytonicstring
 
 This package provides the betacode conversion and basic string operations
+
+## TODO
+
+*Add packages for metric and maybe grammar
+*Add functionality for the main package
+*Add examples
