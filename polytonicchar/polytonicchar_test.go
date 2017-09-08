@@ -44,20 +44,12 @@ func TestUpperCaseSimple(t *testing.T) {
 	}
 }
 
-func TestGreekExtended(t *testing.T) {
+func TestVariants(t *testing.T) {
 	cases := []struct {
 		in   *PolytonicChar
 		want string
 	}{
-		{&PolytonicChar{name: Alpha, capital: false, spiritus: Lenis}, "\u1F00"},
-		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, accent: Circumflex, spiritus: Asper}, "\u1F97"},
-		{&PolytonicChar{name: Rho, capital: true, spiritus: Asper}, "\u1FEC"},
-		{&PolytonicChar{name: Omega, capital: false, accent: Circumflex, iotaSubscriptum: true}, "\u1FF7"},
-		{&PolytonicChar{name: Omega, capital: true, iotaSubscriptum: true}, "\u1FFC"},
-		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, accent: Grave}, "\u1FC2"},
-		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, accent: Acute}, "\u1FC4"},
-		{&PolytonicChar{name: Omicron, capital: false, accent: Grave}, "\u1F78"},
-		{&PolytonicChar{name: Omicron, capital: true, accent: Acute}, "\u1FF9"},
+		{&PolytonicChar{name: Space, capital: false, variant: true}, "\n"},
 		{&PolytonicChar{name: Sigma, capital: false, variant: true}, "\u03C2"},
 	}
 	for _, c := range cases {
@@ -73,15 +65,74 @@ func TestInterpunction(t *testing.T) {
 		in   Char
 		want string
 	}{
+		{Space, " "},
 		{Comma, ","},
 		{Dot, "."},
 		{Apostrophe, "'"},
 		{Interpunct, "\u0387"},
+		{Question, ";"},
 	}
 	for _, c := range cases {
 		got := New(c.in, false).String()
 		if got != c.want {
 			t.Errorf("New(%v, false).String() == %v, want %v", c.in, got, c.want)
+		}
+	}
+}
+
+func TestGreekExtended(t *testing.T) {
+	cases := []struct {
+		in   *PolytonicChar
+		want string
+	}{
+		{&PolytonicChar{name: Rho, capital: false, iotaSubscriptum: false, spiritus: Asper, accent: None}, "\u1FE5"},
+		{&PolytonicChar{name: Rho, capital: true, iotaSubscriptum: false, spiritus: Asper, accent: None}, "\u1FEC"},
+		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, spiritus: Asper, accent: Circumflex}, "\u1F97"},
+		{&PolytonicChar{name: Omega, capital: true, iotaSubscriptum: true, spiritus: Lenis, accent: None}, "\u1FA8"},
+		{&PolytonicChar{name: Alpha, capital: false, iotaSubscriptum: false, spiritus: Lenis, accent: None}, "\u1F00"},
+		{&PolytonicChar{name: Omega, capital: false, iotaSubscriptum: true, spiritus: None, accent: Circumflex}, "\u1FF7"},
+		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, spiritus: None, accent: Grave}, "\u1FC2"},
+		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, spiritus: None, accent: Acute}, "\u1FC4"},
+		{&PolytonicChar{name: Alpha, capital: true, iotaSubscriptum: true, spiritus: None, accent: None}, "\u1FBC"},
+		{&PolytonicChar{name: Upsilon, capital: false, iotaSubscriptum: false, spiritus: None, accent: Circumflex}, "\u1FE6"},
+		{&PolytonicChar{name: Iota, capital: true, iotaSubscriptum: false, spiritus: None, accent: Acute}, "\u1FDB"},
+		{&PolytonicChar{name: Omicron, capital: true, iotaSubscriptum: false, spiritus: None, accent: Grave}, "\u1FF8"},
+		{&PolytonicChar{name: Epsilon, capital: false, iotaSubscriptum: false, spiritus: None, accent: Acute}, "\u1F73"},
+		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: false, spiritus: None, accent: Grave}, "\u1F74"},
+		{&PolytonicChar{name: Omicron, capital: false, accent: Grave}, "\u1F78"},
+		{&PolytonicChar{name: Omicron, capital: true, accent: Acute}, "\u1FF9"},
+	}
+	for _, c := range cases {
+		got := c.in.String()
+		if got != c.want {
+			t.Errorf("(%v).String() == %v, want %v", *c.in, got, c.want)
+		}
+	}
+}
+
+func TestInvalidChars(t *testing.T) {
+	const replacementChar = string(65533)
+	cases := []struct {
+		in *PolytonicChar
+	}{
+		{&PolytonicChar{name: Sigma, capital: true, variant: true}},
+		{&PolytonicChar{name: Space + 1000, capital: false}},
+		{&PolytonicChar{name: Rho, capital: true, spiritus: Lenis}},
+		{&PolytonicChar{name: Rho, capital: false, spiritus: Lenis, iotaSubscriptum: true}},
+		{&PolytonicChar{name: Rho, capital: false, spiritus: Lenis, accent: Grave}},
+		{&PolytonicChar{name: Iota, capital: false, iotaSubscriptum: true, spiritus: Lenis, accent: Grave}},
+		{&PolytonicChar{name: Gamma, capital: false, spiritus: Asper}},
+		{&PolytonicChar{name: Eta, capital: true, iotaSubscriptum: true, spiritus: None, accent: Grave}},
+		{&PolytonicChar{name: Iota, capital: false, iotaSubscriptum: true}},
+		{&PolytonicChar{name: Upsilon, capital: true, iotaSubscriptum: false, spiritus: None, accent: Circumflex}},
+		{&PolytonicChar{name: Epsilon, capital: false, iotaSubscriptum: false, spiritus: None, accent: Circumflex}},
+		{&PolytonicChar{name: Delta, capital: true, accent: Acute}},
+		{&PolytonicChar{name: Gamma, capital: false, accent: Acute}},
+	}
+	for _, c := range cases {
+		got := c.in.String()
+		if got != replacementChar {
+			t.Errorf("(%v).String() == %v, want %v", *c.in, got, replacementChar)
 		}
 	}
 }
@@ -147,8 +198,8 @@ func TestSetVariant(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-        char := New(Alpha, false)
-        SetVariant(char, c.in)
+		char := New(Alpha, false)
+		SetVariant(char, c.in)
 		got := char.variant
 		if got != c.want {
 			t.Errorf("char := New(Alpha, false);SetVariant(char, %v);char.variant == %v, want %v", c.in, got, c.want)
@@ -171,8 +222,8 @@ func TestSetIota(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-        char := New(Alpha, false)
-        SetIota(char, c.in)
+		char := New(Alpha, false)
+		SetIota(char, c.in)
 		got := char.iotaSubscriptum
 		if got != c.want {
 			t.Errorf("char := New(Alpha, false);SetIota(char, %v);char.iotaSubscriptum == %v, want %v", c.in, got, c.want)
@@ -195,8 +246,8 @@ func TestSetSpiritus(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-        char := New(Alpha, false)
-        SetSpiritus(char, c.in)
+		char := New(Alpha, false)
+		SetSpiritus(char, c.in)
 		got := char.spiritus
 		if got != c.want {
 			t.Errorf("char := New(Alpha, false);SetSpiritus(char, %v);char.spiritus == %v, want %v", c.in, got, c.want)
@@ -219,8 +270,8 @@ func TestSetAccent(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-        char := New(Alpha, false)
-        SetAccent(char, c.in)
+		char := New(Alpha, false)
+		SetAccent(char, c.in)
 		got := char.accent
 		if got != c.want {
 			t.Errorf("char := New(Alpha, false);SetAccent(char, %v);char.accent == %v, want %v", c.in, got, c.want)
