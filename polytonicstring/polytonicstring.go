@@ -41,7 +41,7 @@ func SubString(sub PolytonicString, str PolytonicString, exact bool) int {
 	return -1
 }
 
-func WrapString(str PolytonicString, width int) *PolytonicString{
+func WrapString(str PolytonicString, width int) *PolytonicString {
 	space := polytonicchar.New(polytonicchar.Space, false)
 	newline := polytonicchar.New(polytonicchar.Space, false)
 	polytonicchar.SetVariant(newline, true)
@@ -56,13 +56,13 @@ func WrapString(str PolytonicString, width int) *PolytonicString{
 			current = 0
 			lastFound = -1
 		}
-		if current > width && lastFound >= 0{
+		if current > width && lastFound >= 0 {
 			polytonicchar.SetVariant((str)[lastFound], true)
 			current = i - lastFound
 			lastFound = -1
 		}
 	}
-    return &str
+	return &str
 }
 
 func BetaToStr(str string) PolytonicString {
