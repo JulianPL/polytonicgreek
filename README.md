@@ -15,6 +15,6 @@ This package provides the betacode conversion and basic string operations
 
 ## TODO
 
-*Add packages for metric and maybe grammar
-*Add functionality for the main package
-*Add examples
+* Add packages for metric and maybe grammar
+* Add functionality for the main package
+* Add examples
