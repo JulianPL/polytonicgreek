@@ -12,6 +12,9 @@ func (in *PolytonicChar) String() string {
 	}
 
 	//START https://en.wikipedia.org/wiki/Greek_Extended
+	if in.diaeresis {
+		return diaeresisedRepresentation(in)
+	}
 	if in.spiritus != None {
 		return spiritedRepresentation(in)
 	}
@@ -50,7 +53,60 @@ func punctuationRepresentation(in *PolytonicChar) string {
 	return replacementChar
 }
 
-//in is guaranteed to have variant == false, name<=Omega and spiritus != None
+func diaeresisedRepresentation(in *PolytonicChar) string {
+	if in.spiritus != None {
+		return replacementChar
+	}
+
+	accentOffset := map[Accent]int{
+		Grave:      0,
+		Acute:      1,
+		Circumflex: 5,
+	}
+	if offset, ok := accentOffset[in.accent]; ok {
+		const startingPosition = 8146
+		const letterOffset = 16
+
+		if in.capital {
+			return replacementChar
+		}
+
+		out := startingPosition
+		out += offset
+
+		letterNumber := map[Char]int{
+			Iota:    0,
+			Upsilon: 1,
+		}
+		if letter, ok := letterNumber[in.name]; ok {
+			out += letter * letterOffset
+			return string(out)
+		}
+		return replacementChar
+	}
+
+	const startingPosition = 970
+	const letterOffset = 1
+	const capitalOffset = -32
+
+	out := startingPosition
+	if in.capital {
+		out += capitalOffset
+	}
+	letterNumber := map[Char]int{
+		Iota:    0,
+		Upsilon: 1,
+	}
+	if letter, ok := letterNumber[in.name]; ok {
+		out += letter * letterOffset
+		return string(out)
+	}
+
+	return replacementChar
+}
+
+//in is guaranteed to have:
+//  diaeresis == false, variant == false, name<=Omega and spiritus != None
 func spiritedRepresentation(in *PolytonicChar) string {
 	if in.name == Rho {
 		const startingPosition = 8164
@@ -122,6 +178,7 @@ func spiritedRepresentation(in *PolytonicChar) string {
 }
 
 //in is guaranteed to have:
+//  diaeresis == false,
 //  variant == false, name<=Omega, spiritus == None
 //  and (accent != None or iotaSubscriptum == true)
 func difficultRepresentation(in *PolytonicChar) string {

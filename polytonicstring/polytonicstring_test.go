@@ -1,7 +1,6 @@
 package polytonicstring
 
 import (
-	//"polytonicgreek/polytonicchar"
 	"testing"
 )
 
@@ -15,8 +14,8 @@ func TestBetaToStr(t *testing.T) {
 			"",
 		},
 		{
-			"W)h|u=iA)eo(",
-			"\u1f68\u1fc3\u1fe6\u03b9\u1f08\u03b5\u1f41",
+			"W)h|u=iA)eo(i/+",
+			"\u1f68\u1fc3\u1fe6\u03b9\u1f08\u03b5\u1f41\u1fd3",
 		},
 		{
 			". :\n,';",

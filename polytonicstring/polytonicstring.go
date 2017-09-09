@@ -92,6 +92,11 @@ func BetaToStr(str string) PolytonicString {
 				polytonicchar.SetIota((polyStr)[len(polyStr)-1], true)
 			}
 		}
+		if '+' == beta {
+			if len(polyStr) > 0 {
+				polytonicchar.SetDiaeresis((polyStr)[len(polyStr)-1], true)
+			}
+		}
 		betaPunctuations := map[rune]polytonicchar.Char{
 			' ':  polytonicchar.Space,
 			'\n': polytonicchar.Space,

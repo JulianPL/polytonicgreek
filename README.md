@@ -14,7 +14,7 @@ Betacode works mainly as stated in [Wikipedia](https://en.wikipedia.org/wiki/Bet
 * There is neither Digamma nor Lunate Sigma
 * Medial and final Sigma are both represented by s
 * Hyphen, Dash and Numeral are not implemented (and probably won't be in the near future)
-* Diaeresis, macron and breve are not yet implemented
+* Macron and breve are not yet implemented
 
 ## polytonicchar
 

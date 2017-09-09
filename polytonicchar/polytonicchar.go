@@ -4,8 +4,9 @@ package polytonicchar
 type PolytonicChar struct {
 	name            Char
 	capital         bool
-	iotaSubscriptum bool
 	variant         bool
+	iotaSubscriptum bool
+	diaeresis       bool
 	spiritus        Spiritus
 	accent          Accent
 }
@@ -84,6 +85,11 @@ func SetVariant(char *PolytonicChar, in bool) *PolytonicChar {
 
 func SetIota(char *PolytonicChar, in bool) *PolytonicChar {
 	char.iotaSubscriptum = in
+	return char
+}
+
+func SetDiaeresis(char *PolytonicChar, in bool) *PolytonicChar {
+	char.diaeresis = in
 	return char
 }
 

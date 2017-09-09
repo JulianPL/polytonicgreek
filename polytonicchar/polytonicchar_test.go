@@ -85,6 +85,11 @@ func TestGreekExtended(t *testing.T) {
 		in   *PolytonicChar
 		want string
 	}{
+		{&PolytonicChar{name: Iota, capital: false, diaeresis: true, accent: Grave}, "\u1FD2"},
+		{&PolytonicChar{name: Upsilon, capital: false, diaeresis: true, accent: Acute}, "\u1FE3"},
+		{&PolytonicChar{name: Upsilon, capital: false, diaeresis: true, accent: Circumflex}, "\u1FE7"},
+		{&PolytonicChar{name: Iota, capital: false, diaeresis: true}, "\u03CA"},
+		{&PolytonicChar{name: Upsilon, capital: true, diaeresis: true}, "\u03AB"},
 		{&PolytonicChar{name: Rho, capital: false, iotaSubscriptum: false, spiritus: Asper, accent: None}, "\u1FE5"},
 		{&PolytonicChar{name: Rho, capital: true, iotaSubscriptum: false, spiritus: Asper, accent: None}, "\u1FEC"},
 		{&PolytonicChar{name: Eta, capital: false, iotaSubscriptum: true, spiritus: Asper, accent: Circumflex}, "\u1F97"},
@@ -117,6 +122,10 @@ func TestInvalidChars(t *testing.T) {
 	}{
 		{&PolytonicChar{name: Sigma, capital: true, variant: true}},
 		{&PolytonicChar{name: Space + 1000, capital: false}},
+		{&PolytonicChar{name: Iota, capital: true, diaeresis: true, accent: Grave}},
+		{&PolytonicChar{name: Iota, capital: false, diaeresis: true, spiritus: Lenis}},
+		{&PolytonicChar{name: Eta, capital: false, diaeresis: true, accent: Grave}},
+		{&PolytonicChar{name: Alpha, capital: false, diaeresis: true}},
 		{&PolytonicChar{name: Rho, capital: true, spiritus: Lenis}},
 		{&PolytonicChar{name: Rho, capital: false, spiritus: Lenis, iotaSubscriptum: true}},
 		{&PolytonicChar{name: Rho, capital: false, spiritus: Lenis, accent: Grave}},
@@ -223,6 +232,28 @@ func TestSetIota(t *testing.T) {
 		got := SetIota(New(Alpha, false), c.in).iotaSubscriptum
 		if got != c.want {
 			t.Errorf("SetIota(New(Alpha, false), %v).iotaSubscriptum == %v, want %v", c.in, got, c.want)
+		}
+	}
+}
+
+func TestSetDiaeresis(t *testing.T) {
+	cases := []struct {
+		in   bool
+		want bool
+	}{
+		{
+			true,
+			true,
+		},
+		{
+			false,
+			false,
+		},
+	}
+	for _, c := range cases {
+		got := SetDiaeresis(New(Alpha, false), c.in).diaeresis
+		if got != c.want {
+			t.Errorf("SetDiaeresis(New(Alpha, false), %v).diaeresis == %v, want %v", c.in, got, c.want)
 		}
 	}
 }
