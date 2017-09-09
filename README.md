@@ -5,7 +5,16 @@ This project provides methods for converting betacode into proper polytonic gree
 ## How to use
 
 Compile the main package with go.
+
 The main function asks for a number and a betastring and outputs the corresponding greek text with the given width (if possible).
+
+Betacode works mainly as stated in [Wikipedia](https://en.wikipedia.org/wiki/Beta_Code) with the following exceptions:
+
+* *l can not be used instead of L for any latin letter l
+* There is neither Digamma nor Lunate Sigma
+* Medial and final Sigma are both represented by s
+* Hyphen, Dash and Numeral are not implemented (and probably won't be in the near future)
+* Diaeresis, macron and breve are not yet implemented
 
 ## polytonicchar
 
@@ -21,5 +30,5 @@ This package provides the betacode conversion and basic string operations
 ## TODO
 
 * Add packages for metric and maybe grammar
-* Add Trema to polytonicchar
+* Add Diaeresis to polytonicchar
 * Add examples
